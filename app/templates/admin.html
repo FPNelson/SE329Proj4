@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Admin{% endblock %}
+
+{% block css %}
+<style type="text/css">
+  .row {
+    padding-bottom: 10px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-sm-12">
+    <h1>Admin <br><small>Remember, with great power comes great responsibility.</small></h1>
+  </div>
+</div>
+
+<div class="row">
+  <form action="" class="form-horizontal" method="post">
+    <div class="col-sm-8">
+        <div class="input-group">
+          <span class="input-group-addon">
+            Create User
+          </span>
+          <input type="email" name="email" class="form-control" placeholder="email" required="" autofocus="">
+          <span class="input-group-btn">
+            <input class="btn btn-primary" id="add" type="submit" value="Add">
+          </span>
+        </div>
+    </div>
+
+
+
+    <label class="control-label col-sm-1" >Role</label>
+    <div class="col-sm-3">
+      <select name="role" class="form-control">
+        <option value="admin">Admin</option>
+        <option value="base-user-role" selected>Base User</option>
+      </select>
+    </div>
+
+  </form>
+</div>
+
+
+{% if new_user %}
+  <div class="row">
+    <div class="col-sm-12">
+
+      {% if new_user.is_registered %}
+        <div class="alert alert-warning">
+        {{ new_user.email }} has already been registered.
+      {% else %}
+        <div class="alert alert-success">
+        {{ new_user.email }} was successfully created! You can register this account <a href="{{ registration_url }}">here</a>!
+      {% endif %}
+
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+<div class="row">
+  <div class="col-sm-12">
+    <h1>User Directory</h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="form-group col-sm-12">
+    <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Is Registered</th>
+        <th>Registration ID</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+        <tr>
+          <td>{{user.email}}</td>
+          <td>{{user.role}}</td>
+          <td>{{user.is_registered}}</td>
+          <td>{{user.registration_id}}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block js %}{% endblock %}

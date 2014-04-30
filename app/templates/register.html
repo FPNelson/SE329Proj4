@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block css %}
+<style>
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+}
+
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+<h2 class="">Welcome, {{ user.email }} please create a password for your account.</h2>
+
+  {% if attempt.get('failure', False) %}
+<form class="form-signin has-error" action="" method="post">
+    <div class="alert alert-danger">Password must be at least 6 characters!</div>
+  {% else %}
+
+<form class="form-signin" action="" method="post">
+  {% endif %}
+
+
+  <input type="password" name="password" class="form-control" placeholder="password" required="" autofocus="">
+
+  <input class="btn btn-primary btn-lg pull-right" id="submit" type="submit" value="Register">
+</form>
+
+{% endblock %}
+
+{% block js %}{% endblock %}

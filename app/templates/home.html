@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block css %}
+<style type="text/css">
+
+  .jumbotron {
+    text-align: center;
+    margin-top: 30px;
+    background-color: rgba(238, 238, 238, 0.90);
+  }
+
+  body {
+      background: url(http://farm2.staticflickr.com/1378/5118138509_db47a65c54_o.jpg) no-repeat center center fixed;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+  }
+
+</style>
+{% endblock %}
+{% block content %}
+<div class="jumbotron">
+  <h1>Team April Fools</h1>
+  <p class="lead">Welcome to our project demo!</p>
+</div>
+{% endblock %}
+
+{% block js %}{% endblock %}

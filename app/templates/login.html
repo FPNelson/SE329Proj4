@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block css %}
+<style>
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+  {% if failure %}
+<form class="form-signin has-error" action="" method="post">
+    <div class="alert alert-danger">Incorrect Email/Password!</div>
+  {% else %}
+
+<form class="form-signin" action="" method="post">
+  {% endif %}
+
+  <h2 class="">Please sign in</h2>
+  <input type="email" name="email" class="form-control" placeholder="email" required="" autofocus="" value="{{ email }}">
+  <input type="password" name="password" class="form-control" placeholder="password" required="">
+
+  <input class="btn btn-primary btn-lg pull-right" id="submit" type="submit" value="Sign In">
+</form>
+
+{% endblock %}
+
+{% block js %}{% endblock %}

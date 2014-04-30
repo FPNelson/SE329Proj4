@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+
+{% block title %}Bootstrap Examples{% endblock %}
+
+{% block css %}
+<style type="text/css">
+  img {
+      width: 100px;
+      height: 100px;
+  }
+
+  .input-group, .btn-group {
+      margin-bottom: 10px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+
+  <h1> Hello World</h1>
+
+  <div class="row">
+      <div class="col-md-12">
+          <h4>Test</h4>
+          <p id="res"></p>
+          <p> foo bar</p>
+          <button type="button" class="btn btn-primary btn-lg">Primary button</button>
+          <button type="button" class="btn btn-default btn-lg ">Button</button>
+
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+          <div class="form-group has-success">
+              <label class="control-label" for="inputSuccess">Input with success</label>
+              <input type="text" class="form-control" id="inputSuccess">
+          </div>
+
+
+          <form class="form-horizontal" role="form">
+              <div class="form-group">
+                  <label class="col-sm-2 control-label">Email</label>
+                  <div class="col-sm-10">
+                       <input type="email" class="form-control" id="inputEmail" placeholder="your@email.com">
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label for="inputPassword" class="col-sm-2 control-label">Password</label>
+                  <div class="col-sm-10">
+                      <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                  </div>
+              </div>
+          </form>
+          <img src="http://upload.wikimedia.org/wikipedia/commons/2/2c/Chinchilla-Patchouli.jpg" alt="..." class="img-rounded">
+
+          <table class="table table-striped">
+              <thead>
+                  <tr>
+                      <th>#</th>
+                      <th>First Name</th>
+                      <th>Last Name</th>
+                      <th>Username</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <td>1</td>
+                      <td>Mark</td>
+                      <td>Otto</td>
+                      <td>@mdo</td>
+                  </tr>
+                  <tr>
+                      <td>2</td>
+                      <td>Jacob</td>
+                      <td>Thornton</td>
+                      <td>@fat</td>
+                  </tr>
+                  <tr>
+                      <td>3</td>
+                      <td>Larry</td>
+                      <td>the Bird</td>
+                      <td>@twitter</td>
+                  </tr>
+              </tbody>
+          </table>
+          <p class="text-muted">For example, <code>&lt;section&gt;</code> should be wrapped as inline.</p>
+
+
+          <div class="btn-group">
+            <button type="button" class="btn btn-default">Left</button>
+            <button type="button" class="btn btn-default">Middle</button>
+            <button type="button" class="btn btn-default">Right</button>
+          </div>
+
+
+          <div class="input-group">
+            <span class="input-group-addon">@</span>
+            <input type="text" class="form-control" placeholder="Username">
+          </div>
+
+          <div class="input-group">
+            <input type="text" class="form-control">
+            <span class="input-group-addon">.00</span>
+          </div>
+
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <input type="text" class="form-control">
+            <span class="input-group-addon">.00</span>
+          </div>
+
+
+
+          <div class="well well-sm">Look I'm a small well</div>
+
+
+          <div class="panel panel-default">
+            <div class="panel-body">
+              Panel content
+            </div>
+            <div class="panel-footer">Panel footer</div>
+          </div>
+
+
+
+        <div class="media">
+          <a class="pull-left" href="#">
+            <img class="media-object" data-src="holder.js/64x64" alt="64x64" style="width: 64px; height: 64px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACsklEQVR4Xu2Y24upYRTGl0PI0JSimHDjMIVETVMzpvzrziLSTIkiLpTcjJLzcfaziuz2Njufsb8La93o+3jX+65nHX55NZ+fnzu6YdOIAFIB0gIyA254BpIMQaGAUEAoIBQQCtywAoJBwaBgUDAoGLxhCMifIcGgYFAwKBgUDAoGb1iBizHYbDap3+/Tbrcjp9NJwWCQNBrNQdJflKF6vU5ms5lisdhv353S/Ro+T+11kQCNRoN6vR7p9Xr2v16vyev1kt/v52eIkkql+L3BYKBEIkFarfbberuGz+82VCzAZrOhdDrNGX17e6PVakXdbpesVis9PDzwnq1Wi9/BTCYTvb6+0mQyoff3d9LpdBSPx2k8HhOCNhqNFIlEKJvNnu3zuOLO7WbFAiyXSz7sdrvloOfzObdAIBDgM8xmM8rlcuTxeGg0GtF0OmWhcNhKpULD4ZBsNhuvw3eoGqxX6vPcwPe/VywAertarbIftADKHIYgQqEQlctlzm4ymaRSqUSLxeIgwLF4WHN/f09PT090ic//LgAynM/nuXRfXl44i8VikXs9HA6zOHd3d+R2u6ndbnOl+Hw+foZ1Oh1+D3t+fuYqutSnEhEUVwAyjhmA3oYA+2cI8Pj4SLVa7Y/zYACiIjAcM5nMoWrsdjtFo9GDDyU+/zVcT4mjWAAEgQpA1lwuF3+irx0OB1cAyhyGg6EdIBAyjeA+Pj5oMBiQxWLhykF1YABirVKfSrKPNYoFwGIMsEKhQCACDO2AXkaQx4bWgACgAAYiBNnTA0KA+5gje5qc61MVChwHiGEHQ0Z/yq7h829nu6gCfipYNf2IAHIjJDdCciMkN0JqTmG19xYKCAWEAkIBoYDak1jN/YUCQgGhgFBAKKDmFFZ7b6GAUEAoIBQQCqg9idXcXyhw6xT4AgyAjZ+ww1kxAAAAAElFTkSuQmCC">
+          </a>
+          <div class="media-body">
+            <h4 class="media-heading">Media heading</h4>
+            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+          </div>
+        </div>
+        <div class="media">
+          <a class="pull-left" href="#">
+            <img class="media-object" data-src="holder.js/64x64" alt="64x64" style="width: 64px; height: 64px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACsklEQVR4Xu2Y24upYRTGl0PI0JSimHDjMIVETVMzpvzrziLSTIkiLpTcjJLzcfaziuz2Njufsb8La93o+3jX+65nHX55NZ+fnzu6YdOIAFIB0gIyA254BpIMQaGAUEAoIBQQCtywAoJBwaBgUDAoGLxhCMifIcGgYFAwKBgUDAoGb1iBizHYbDap3+/Tbrcjp9NJwWCQNBrNQdJflKF6vU5ms5lisdhv353S/Ro+T+11kQCNRoN6vR7p9Xr2v16vyev1kt/v52eIkkql+L3BYKBEIkFarfbberuGz+82VCzAZrOhdDrNGX17e6PVakXdbpesVis9PDzwnq1Wi9/BTCYTvb6+0mQyoff3d9LpdBSPx2k8HhOCNhqNFIlEKJvNnu3zuOLO7WbFAiyXSz7sdrvloOfzObdAIBDgM8xmM8rlcuTxeGg0GtF0OmWhcNhKpULD4ZBsNhuvw3eoGqxX6vPcwPe/VywAertarbIftADKHIYgQqEQlctlzm4ymaRSqUSLxeIgwLF4WHN/f09PT090ic//LgAynM/nuXRfXl44i8VikXs9HA6zOHd3d+R2u6ndbnOl+Hw+foZ1Oh1+D3t+fuYqutSnEhEUVwAyjhmA3oYA+2cI8Pj4SLVa7Y/zYACiIjAcM5nMoWrsdjtFo9GDDyU+/zVcT4mjWAAEgQpA1lwuF3+irx0OB1cAyhyGg6EdIBAyjeA+Pj5oMBiQxWLhykF1YABirVKfSrKPNYoFwGIMsEKhQCACDO2AXkaQx4bWgACgAAYiBNnTA0KA+5gje5qc61MVChwHiGEHQ0Z/yq7h829nu6gCfipYNf2IAHIjJDdCciMkN0JqTmG19xYKCAWEAkIBoYDak1jN/YUCQgGhgFBAKKDmFFZ7b6GAUEAoIBQQCqg9idXcXyhw6xT4AgyAjZ+ww1kxAAAAAElFTkSuQmCC">
+          </a>
+          <div class="media-body">
+            <h4 class="media-heading">Media heading</h4>
+            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+            <div class="media">
+              <a class="pull-left" href="#">
+                <img class="media-object" data-src="holder.js/64x64" alt="64x64" style="width: 64px; height: 64px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACsklEQVR4Xu2Y24upYRTGl0PI0JSimHDjMIVETVMzpvzrziLSTIkiLpTcjJLzcfaziuz2Njufsb8La93o+3jX+65nHX55NZ+fnzu6YdOIAFIB0gIyA254BpIMQaGAUEAoIBQQCtywAoJBwaBgUDAoGLxhCMifIcGgYFAwKBgUDAoGb1iBizHYbDap3+/Tbrcjp9NJwWCQNBrNQdJflKF6vU5ms5lisdhv353S/Ro+T+11kQCNRoN6vR7p9Xr2v16vyev1kt/v52eIkkql+L3BYKBEIkFarfbberuGz+82VCzAZrOhdDrNGX17e6PVakXdbpesVis9PDzwnq1Wi9/BTCYTvb6+0mQyoff3d9LpdBSPx2k8HhOCNhqNFIlEKJvNnu3zuOLO7WbFAiyXSz7sdrvloOfzObdAIBDgM8xmM8rlcuTxeGg0GtF0OmWhcNhKpULD4ZBsNhuvw3eoGqxX6vPcwPe/VywAertarbIftADKHIYgQqEQlctlzm4ymaRSqUSLxeIgwLF4WHN/f09PT090ic//LgAynM/nuXRfXl44i8VikXs9HA6zOHd3d+R2u6ndbnOl+Hw+foZ1Oh1+D3t+fuYqutSnEhEUVwAyjhmA3oYA+2cI8Pj4SLVa7Y/zYACiIjAcM5nMoWrsdjtFo9GDDyU+/zVcT4mjWAAEgQpA1lwuF3+irx0OB1cAyhyGg6EdIBAyjeA+Pj5oMBiQxWLhykF1YABirVKfSrKPNYoFwGIMsEKhQCACDO2AXkaQx4bWgACgAAYiBNnTA0KA+5gje5qc61MVChwHiGEHQ0Z/yq7h829nu6gCfipYNf2IAHIjJDdCciMkN0JqTmG19xYKCAWEAkIBoYDak1jN/YUCQgGhgFBAKKDmFFZ7b6GAUEAoIBQQCqg9idXcXyhw6xT4AgyAjZ+ww1kxAAAAAElFTkSuQmCC">
+              </a>
+              <div class="media-body">
+                <h4 class="media-heading">Nested media heading</h4>
+                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+              </div>
+            </div>
+          </div>
+
+          <div class="alert alert-success">
+            <a href="#" class="alert-link">...</a>
+          </div>
+        </div>
+
+          <button id="tooltip" type="button" class="btn btn-default" data-original-title="" title="">Tooltip on left</button>
+      </div>
+  
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+    $(document).ready(function() {
+        $('#tooltip').tooltip({
+            placement: 'top',
+            title: 'Hello!'
+        });
+    });
+</script>
+{% endblock %}

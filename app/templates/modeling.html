@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}Modeling{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block content %}
+<div class="row">
+  <h1>Add a Student</h1>
+
+  <div class="form-group col-sm-6">
+    <label class="input-name">Name</label>
+    <div class="">
+      <input type="text" class="form-control" id="input-name" placeholder="For example 'Jon Snow'">
+    </div>
+  </div>
+  <div class="form-group col-sm-6">
+    <label for="input-age" class="control-label">Age</label>
+    <div class="">
+      <input type="number" class="form-control" id="input-age">
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+  <button id="add-student" class="btn btn-primary pull-right">Add</button>
+  </div>
+</div>
+
+
+<div class="row">
+<h1>All Students</h1>
+  <div class="form-group col-sm-12">
+    <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Age</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for student in students %}
+        <tr>
+          <td>{{student.name}}</td>
+          <td>{{student.age}}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+
+{% block js %}
+
+<script>
+  'use strict';
+  $(document).ready(function() {
+    var name = $('#input-name');
+    var age = $('#input-age');
+    $('#add-student').click(function() {
+      console.log(name.val());
+      console.log(age.val());
+      var data = JSON.stringify({
+        'name': name.val(),
+        'age': age.val()
+      });
+
+      $.ajax({
+        type: 'POST',
+        url: '{{ url_for("views.post_student") }}',
+        data: data,
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        complete: function(data){
+          // wait 400 miliseconds until we reload the page with updated results
+          window.setTimeout(function() {
+            location.reload();
+          }, 400);
+        }
+      });
+
+    });
+  });
+</script>
+
+{% endblock %}
+

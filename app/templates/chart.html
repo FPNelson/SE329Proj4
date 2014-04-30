@@ -1,0 +1,276 @@
+{% extends "base.html" %}
+
+{% block title %}Chart JS Demo{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.1.2/nprogress.css">
+<style type="text/css">
+  canvas {
+    padding-top: 25px;
+  }
+  #legend > span {
+    padding-right: 25px;
+  }
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="row">
+  <div class="col-sm-12">
+    <h1>Chart <br><small>Show data by...</small></h1>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="form-group col-sm-4">
+    <label for="student_year">Year</label>
+    <select name="student_year" class="form-control" id="student_year">
+      <option value="all" selected>all recorded years</option>
+      <option value="2012">2012</option>
+      <option value="2013" >2013</option>
+      <option value="2014">2014</option>
+    </select>
+  </div>
+
+  <div class="form-group col-sm-4">
+    <label for="student_type">Student Property</label>
+    <select name="student_type" class="form-control" id="student_type">
+      <option value="gpa">GPA</option>
+      <option value="age">Age</option>
+      <option value="gender">Gender</option>
+      <option value="oncampus">Living On/Off Campus</option>
+      <option value="major">Major Distribution</option>
+      <option value="grade">Grade</option>
+    </select>
+  </div>
+</div>
+
+<div class="row">
+  <div class="form-group col-sm-4">
+    <label for="college">College of</label>
+    <select name="college" class="form-control" id="college">
+      <option value="">-</option>
+      {% for college in colleges %}
+      <option value="{{college}}">{{college}}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="form-group col-sm-4">
+    <label for="major">Department</label>
+    <select name="major" class="form-control" id="major" disabled>
+      <option value="">-</option>
+    </select>
+  </div>
+  <div class="form-group col-sm-4">
+    <label for="course">Course</label>
+    <select name="course" class="form-control" id="course" disabled>
+      <option value="">-</option>
+    </select>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-sm-12">
+    <input class="btn btn-primary btn-lg pull-right" id="submit" type="submit" value="Update">
+  </div>
+</div>
+
+<div class="row">
+  <div id="legend" class="col-sm-12">
+
+  </div>
+</div>
+
+<canvas id="myChart" width="700" height="400"></canvas>
+
+{% endblock %}
+
+{% block js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.1.2/nprogress.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/0.2.0/Chart.min.js"></script>
+<script>
+    $("#college" ).change(function(e) {
+      var element = $(this);
+      $.ajax({
+        type: 'GET',
+        url: '/isu/' + element.val(),
+        dataType: 'json',
+        complete: function(data){
+          var majors = data.responseJSON;
+          var newOptions = '<option value="">-</option>';
+          for (var i=0; i<majors.length; i++) {
+            var major = majors[i];
+            newOptions += '<option value="' + major + '">' + major + '</option>';
+          }
+          $('#major').removeAttr('disabled')
+                     .html(newOptions);
+        }
+      });
+
+    });
+</script>
+<script>
+  Array.min = function( array ){
+      return Math.min.apply( Math, array );
+  };
+  Array.max = function( array ){
+      return Math.max.apply( Math, array );
+  };
+  var isInArray = function(array, search) {
+      return (array.indexOf(search) >= 0) ? true : false; 
+  };
+
+  $(document).ready(function() {
+      NProgress.configure({ trickleRate: 0.10, trickleSpeed: 350 });
+    $('#submit').click(function(e) {
+      NProgress.start();
+      var data = {
+        course: $('#course').val(),
+        major: $('#major').val(),
+        college: $('#college').val(),
+        student_type: $('#student_type').val(),
+        year: $('#student_year').val(),
+      };
+      $.ajax({
+        type: 'POST',
+        url: '{{ url_for("views.charts") }}',
+        dataType: 'json',
+        data: data,
+        complete: function(data){
+          NProgress.done();
+          var distribution = data.responseJSON.distribution;
+          var studentType = $('#student_type').val();
+
+          var graph_data = {
+            labels : [],
+            datasets : [
+              {
+                fillColor : "rgba(151,187,205,0.2)",
+                strokeColor : "rgba(151,187,205,1)",
+                data : []
+              },
+              {
+                fillColor : "rgba(220,220,220,0.2)",
+                strokeColor : "rgba(220,220,220,1)",
+                data : []
+              },
+              {
+                fillColor : "rgba(151,205,187,0.2)",
+                strokeColor : "rgba(151,205,187,1)",
+                data : []
+              }
+            ]
+          };
+
+          $('#legend').html('');
+          var currentColorIndex = 0;
+          var grades = ['A','A-','B+','B','B-','C+','C','C-','D+','D','D-','F'];
+          for(var year in distribution) {
+            if (distribution.hasOwnProperty(year)) {
+              if(studentType == "grade"){
+                graph_data.labels.push('A');
+                graph_data.datasets[currentColorIndex].data.push(distribution[year]["A"]);
+                graph_data.labels.push('A-');
+                graph_data.datasets[currentColorIndex].data.push(distribution[year]["A-"]);
+                graph_data.labels.push('B+');
+                graph_data.datasets[currentColorIndex].data.push(distribution[year]["B+"]);
+                graph_data.labels.push('B');
+                graph_data.datasets[currentColorIndex].data.push(distribution[year]["B"]);
+                graph_data.labels.push('B-');
+                graph_data.datasets[currentColorIndex].data.push(distribution[year]["B-"]);
+                graph_data.labels.push('C+');
+                graph_data.datasets[currentColorIndex].data.push(distribution[year]["C+"]);
+                graph_data.labels.push('C');
+                graph_data.datasets[currentColorIndex].data.push(distribution[year]["C"]);
+                graph_data.labels.push('C-');
+                graph_data.datasets[currentColorIndex].data.push(distribution[year]["C-"]);
+                graph_data.labels.push('D+');
+                graph_data.datasets[currentColorIndex].data.push(distribution[year]["D+"]);
+                graph_data.labels.push('D');
+                graph_data.datasets[currentColorIndex].data.push(distribution[year]["D"]);
+                graph_data.labels.push('D-');
+                graph_data.datasets[currentColorIndex].data.push(distribution[year]["D-"]);
+                graph_data.labels.push('F');
+                graph_data.datasets[currentColorIndex].data.push(distribution[year]["F"]);
+              }
+              else {
+                for(var distribution_group in distribution[year]) {
+                  if(distribution[year].hasOwnProperty(distribution_group)){
+                    if (! isInArray(graph_data.labels, distribution_group))
+                      graph_data.labels.push(distribution_group);
+                    graph_data.datasets[currentColorIndex].data.push(distribution[year][distribution_group]);
+                  }
+                }
+              }
+
+
+              $('#legend').append([
+                '<span style="color:',graph_data.datasets[currentColorIndex].strokeColor,';">',
+                year,
+                '</span>'].join('')
+              );
+              currentColorIndex = currentColorIndex + 1;
+              
+            }
+          }
+
+          if(currentColorIndex < 2)
+              graph_data.datasets.splice(currentColorIndex, 3 - currentColorIndex);
+
+          if(studentType != "grade") {
+              graph_data.labels.sort(function(a, b) {
+                return a - b; // I'm cheating some data here...
+              });
+          }
+
+          var ctx = $("#myChart").get(0).getContext("2d");
+          var steps = [];
+
+          for (var i = 0; i < currentColorIndex; i++)
+          {
+            steps = steps.concat(graph_data.datasets[i].data);
+          }
+
+          var options = {
+            scaleOverride : true,
+            scaleSteps : Array.max(steps) - Array.min(steps)+2,
+            scaleStepWidth : 1,
+            scaleStartValue : Array.min(steps)-2
+          };
+
+          if (studentType === 'gender' || studentType === 'oncampus')
+            new Chart(ctx).Bar(graph_data,options);
+          else
+            new Chart(ctx).Line(graph_data,options);
+        }
+      });
+    });
+
+
+    $("#major" ).change(function(e) {
+      var element = $(this);
+      $.ajax({
+        type: 'GET',
+        url: '/isu/' + element.val(),
+        dataType: 'json',
+        complete: function(data){
+          var courses = data.responseJSON;
+          var newOptions = '<option value="">-</option><option value="201">201</option><option value="202">202</option><option value="220">220</option><option value="230">230</option><option value="306">306</option><option value="307">307</option><option value="332">332</option><option value="333">333</option><option value="411">411</option><option value="419A">419A</option><option value="424">424</option><option value="434A">434A</option><option value="451A">451A</option><option value="451B">451B</option><option value="451C">451C</option><option value="451D">451D</option><option value="482C">482C</option><option value="490A">490A</option><option value="490B">490B</option><option value="490C">490C</option><option value="490D">490D</option><option value="490H">490H</option><option value="511">511</option><option value="519">519</option><option value="532">532</option><option value="533">533</option><option value="541">541</option><option value="542">542</option><option value="555">555</option><option value="582C">582C</option><option value="590">590</option><option value="699">699</option>';
+          $('#course').removeAttr('disabled')
+                     .html(newOptions);
+        }
+      });
+
+    });
+
+
+  });
+</script>
+
+{% endblock %}
