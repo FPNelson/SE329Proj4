@@ -1,6 +1,5 @@
-Uptown Saturday Night
+Team April Fools
 =========
-[uptown-prototype.appspot.com](http://uptown-prototype.appspot.com/)
 
 Setting Up
 -----------
@@ -9,6 +8,7 @@ Setting Up
 * Download and Install [Git](http://git-scm.com/book/en/Getting-Started-Installing-Git)
 * Checkout this repository ```git clone https://github.com/theMagicalKarp/uptown-prototype.git uptown```
 * Start GAE SDK and select this project.
+* You will have to write in scripts to the views.py file's login function and insert yourself into the database to successfully login.
 
 Running Unit Tests
 -----------
