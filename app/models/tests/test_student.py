@@ -20,7 +20,8 @@ class CreateStudentTestCase(unittest.TestCase):
 
     def test_create(self):
         new_student = student.create_student(21, 2.5, True,
-            'Software Engineering', 'Liberal Arts and Sciences', 'Iowa', False, 2014)
+            'Software Engineering', 'Liberal Arts and Sciences', 'Iowa', False, 2014#, 'SE329', 'B'
+            )
 
         self.assertEqual(new_student.age, 21)
         self.assertEqual(new_student.gpa, 2.5)
@@ -30,3 +31,5 @@ class CreateStudentTestCase(unittest.TestCase):
         self.assertEqual(new_student.homestate, 'Iowa')
         self.assertEqual(new_student.oncampus, False)
         self.assertEqual(new_student.year, 2014)
+        #self.assertEqual(new_student.course, 'SE329')
+        #self.assertEqual(new_student.grade, 'B')
